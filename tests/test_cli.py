@@ -56,13 +56,67 @@ class TestParseArgs:
 class TestMainExistingDir:
     def test_existing_directory_exits(self, tmp_path, monkeypatch):
         """main() should exit with error if target directory already exists."""
-        import sys
-
         monkeypatch.chdir(tmp_path)
-        (tmp_path / "existing-project").mkdir()
+        # Directory is now created from the normalized module_name
+        (tmp_path / "existing_project").mkdir()
 
         from create_worker.cli import main
 
         with pytest.raises(SystemExit) as exc_info:
             main(["--name", "existing-project"])
         assert exc_info.value.code == 1
+
+
+class TestInputValidation:
+    """Edge-case tests for name validation (issues #1, #2, #10)."""
+
+    def test_digit_leading_name_exits(self, tmp_path, monkeypatch):
+        """Names that normalize to digit-leading module names should be rejected."""
+        monkeypatch.chdir(tmp_path)
+
+        from create_worker.cli import main
+
+        with pytest.raises(SystemExit) as exc_info:
+            main(["--name", "123-service"])
+        assert exc_info.value.code == 1
+
+    def test_empty_normalized_name_exits(self, tmp_path, monkeypatch):
+        """Names that normalize to empty string should be rejected."""
+        monkeypatch.chdir(tmp_path)
+
+        from create_worker.cli import main
+
+        with pytest.raises(SystemExit) as exc_info:
+            main(["--name", "..."])
+        assert exc_info.value.code == 1
+
+    def test_path_separator_is_normalized(self, tmp_path, monkeypatch):
+        """Path separators in names should be normalized, not cause traversal."""
+        monkeypatch.chdir(tmp_path)
+
+        from create_worker.cli import main
+
+        main(["--name", "../escape", "--no-git"])
+        # Should create directory in cwd from normalized name, not traverse up
+        assert (tmp_path / "escape").exists()
+        assert not (tmp_path.parent / "escape").exists()
+
+    def test_braces_in_name_work(self, tmp_path, monkeypatch):
+        """Braces in project names should not break template rendering."""
+        monkeypatch.chdir(tmp_path)
+
+        from create_worker.cli import main
+
+        # "my{service}" normalizes to "my_service_" → stripped → "my_service"
+        main(["--name", "my{service}", "--no-git"])
+        assert (tmp_path / "my_service").exists()
+
+    def test_directory_uses_normalized_name(self, tmp_path, monkeypatch):
+        """Directory should use the normalized module name, not raw input."""
+        monkeypatch.chdir(tmp_path)
+
+        from create_worker.cli import main
+
+        main(["--name", "My Cool Service", "--no-git"])
+        assert (tmp_path / "my_cool_service").exists()
+        assert not (tmp_path / "My Cool Service").exists()

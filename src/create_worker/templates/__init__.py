@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from string import Template
+
 from create_worker.templates import (
     action_handler,
     action_schema,
@@ -53,4 +55,4 @@ COPILOT_MANIFEST: list[tuple[object, str]] = [
 def render(template_module: object, **kwargs: str) -> str:
     """Render a template module's CONTENT with the given variables."""
     content: str = getattr(template_module, "CONTENT")
-    return content.format(**kwargs)
+    return Template(content).substitute(**kwargs)

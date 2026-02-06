@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import shutil
 import subprocess
+import sys
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -83,7 +84,7 @@ def _git_init(target_dir: Path) -> None:
             capture_output=True,
         )
     except (subprocess.CalledProcessError, FileNotFoundError) as e:
-        print(f"Warning: git init failed ({e}). Skipping.")
+        print(f"Warning: git init failed ({e}). Skipping.", file=sys.stderr)
 
 
 def _print_next_steps(config: ScaffoldConfig) -> None:
@@ -91,7 +92,7 @@ def _print_next_steps(config: ScaffoldConfig) -> None:
     print(f"\nCreated project: {config.project_name}")
     print(f"  Directory: {config.target_dir}\n")
     print("Next steps:")
-    print(f"  cd {config.project_name}")
+    print(f"  cd {config.target_dir.name}")
     print("  uv sync")
     print("  # Edit .env as needed")
     print(f"  uv run python -m {config.module_name}.main")

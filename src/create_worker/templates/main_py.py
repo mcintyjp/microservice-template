@@ -1,5 +1,5 @@
 CONTENT = """\
-\"\"\"Entry point for the {project_name} microservice.\"\"\"
+\"\"\"Entry point for the $project_name microservice.\"\"\"
 
 from usvc_lib import Application
 
