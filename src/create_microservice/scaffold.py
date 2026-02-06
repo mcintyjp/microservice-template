@@ -8,7 +8,7 @@ import sys
 from dataclasses import dataclass
 from pathlib import Path
 
-from create_worker.templates import (
+from create_microservice.templates import (
     CLAUDE_MANIFEST,
     COPILOT_MANIFEST,
     MANIFEST,
@@ -78,7 +78,7 @@ def _git_init(target_dir: Path) -> None:
         subprocess.run(["git", "init"], cwd=target_dir, check=True, capture_output=True)
         subprocess.run(["git", "add", "."], cwd=target_dir, check=True, capture_output=True)
         subprocess.run(
-            ["git", "commit", "-m", "Initial scaffold from create-worker"],
+            ["git", "commit", "-m", "Initial scaffold from create-microservice"],
             cwd=target_dir,
             check=True,
             capture_output=True,

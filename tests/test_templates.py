@@ -2,7 +2,7 @@
 
 import pytest
 
-from create_worker.templates import (
+from create_microservice.templates import (
     CLAUDE_MANIFEST,
     COPILOT_MANIFEST,
     MANIFEST,

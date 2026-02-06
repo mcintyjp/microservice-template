@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from string import Template
 
-from create_worker.templates import (
+from create_microservice.templates import (
     action_handler,
     action_schema,
     claude_md,

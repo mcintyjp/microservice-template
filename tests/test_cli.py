@@ -2,7 +2,7 @@
 
 import pytest
 
-from create_worker.cli import _normalize_name, _parse_args
+from create_microservice.cli import _normalize_name, _parse_args
 
 
 class TestNormalizeName:
@@ -65,7 +65,7 @@ class TestMainExistingDir:
         # Directory is now created from the normalized module_name
         (tmp_path / "existing_project").mkdir()
 
-        from create_worker.cli import main
+        from create_microservice.cli import main
 
         with pytest.raises(SystemExit) as exc_info:
             main(["--name", "existing-project"])
@@ -79,7 +79,7 @@ class TestInputValidation:
         """Names that normalize to digit-leading module names should be rejected."""
         monkeypatch.chdir(tmp_path)
 
-        from create_worker.cli import main
+        from create_microservice.cli import main
 
         with pytest.raises(SystemExit) as exc_info:
             main(["--name", "123-service"])
@@ -89,7 +89,7 @@ class TestInputValidation:
         """Names that normalize to empty string should be rejected."""
         monkeypatch.chdir(tmp_path)
 
-        from create_worker.cli import main
+        from create_microservice.cli import main
 
         with pytest.raises(SystemExit) as exc_info:
             main(["--name", "..."])
@@ -99,7 +99,7 @@ class TestInputValidation:
         """Path separators in names should be normalized, not cause traversal."""
         monkeypatch.chdir(tmp_path)
 
-        from create_worker.cli import main
+        from create_microservice.cli import main
 
         main(["--name", "../escape", "--no-git"])
         # Should create directory in cwd from normalized name, not traverse up
@@ -110,7 +110,7 @@ class TestInputValidation:
         """Braces in project names should not break template rendering."""
         monkeypatch.chdir(tmp_path)
 
-        from create_worker.cli import main
+        from create_microservice.cli import main
 
         # "my{service}" normalizes to "my_service_" → stripped → "my_service"
         main(["--name", "my{service}", "--no-git"])
@@ -120,7 +120,7 @@ class TestInputValidation:
         """Directory should use the normalized module name, not raw input."""
         monkeypatch.chdir(tmp_path)
 
-        from create_worker.cli import main
+        from create_microservice.cli import main
 
         main(["--name", "My Cool Service", "--no-git"])
         assert (tmp_path / "my_cool_service").exists()

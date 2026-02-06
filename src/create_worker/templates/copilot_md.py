@@ -1,3 +1,0 @@
-"""Copilot instructions template — re-exports shared AI instructions."""
-
-from create_worker.templates.ai_instructions import CONTENT  # noqa: F401
