@@ -1,0 +1,24 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "create-worker"
+version = "0.1.0"
+description = "Scaffold a new usvc-lib microservice project"
+requires-python = ">=3.12"
+dependencies = []
+
+[project.scripts]
+create-worker = "create_worker.cli:main"
+
+[dependency-groups]
+dev = [
+    "pytest",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/create_worker"]
