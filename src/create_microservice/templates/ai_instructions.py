@@ -1,5 +1,7 @@
+"""Shared AI assistant instructions for Claude and Copilot providers."""
+
 CONTENT = """\
-# {project_name}
+# $project_name
 
 ## Architecture
 
@@ -12,7 +14,7 @@ This is a microservice built with `usvc-lib`. It uses a job queue pattern:
 ## Key Commands
 
 ```bash
-uv run python -m {module_name}.main    # Run the service
+uv run python -m $module_name.main    # Run the service
 uv run pytest tests/ -v                # Run tests
 ```
 
@@ -26,7 +28,7 @@ uv run pytest tests/ -v                # Run tests
 ## Adding a Service
 
 1. Create a class in `src/services/` extending `RestAPIService` or `ServiceProvider`
-2. Register it in `src/{module_name}/main.py` with `app.register_service(MyService)`
+2. Register it in `src/$module_name/main.py` with `app.register_service(MyService)`
 
 ## Environment
 

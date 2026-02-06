@@ -12,7 +12,7 @@ wheels = [
 ]
 
 [[package]]
-name = "create-worker"
+name = "create-microservice"
 version = "0.1.0"
 source = { editable = "." }
 

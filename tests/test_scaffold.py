@@ -2,7 +2,7 @@
 
 import pytest
 
-from create_worker.scaffold import ScaffoldConfig, create_project
+from create_microservice.scaffold import ScaffoldConfig, create_project
 
 
 @pytest.fixture

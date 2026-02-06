@@ -1,6 +1,6 @@
 CONTENT = """\
-# {project_name} configuration
-MICROSERVICE_NAME={project_name}
+# $project_name configuration
+MICROSERVICE_NAME=$project_name
 
 # Dev mode (uses in-memory queue instead of Oracle)
 DEV_MODE=true

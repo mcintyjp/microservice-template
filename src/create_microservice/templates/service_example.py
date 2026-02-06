@@ -21,7 +21,7 @@ Register it in your main.py with app.register_service(ExampleAPI).
 #
 #     async def get_resource(self, resource_id: str) -> dict:
 #         \"\"\"Fetch a resource from the external API.\"\"\"
-#         response = await self.request("GET", f"{{self.config.BASE_URL}}/resources/{{resource_id}}")
+#         response = await self.request("GET", f"{self.config.BASE_URL}/resources/{resource_id}")
 #         response.raise_for_status()
 #         return response.json()
 """

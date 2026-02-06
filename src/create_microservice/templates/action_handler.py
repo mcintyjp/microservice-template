@@ -9,5 +9,5 @@ from actions.hello_world.schemas import HelloWorldInput
 @action(name="hello_world")
 async def handle(input_data: HelloWorldInput) -> dict:
     \"\"\"Process a hello_world action.\"\"\"
-    return {{"message": f"Hello, {{input_data.name}}!"}}
+    return {"message": f"Hello, {input_data.name}!"}
 """

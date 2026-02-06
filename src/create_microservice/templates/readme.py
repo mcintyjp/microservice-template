@@ -1,5 +1,5 @@
 CONTENT = """\
-# {project_name}
+# $project_name
 
 A microservice built with [usvc-lib](https://github.com/mcintyjp/microservice-lib).
 
@@ -7,13 +7,15 @@ A microservice built with [usvc-lib](https://github.com/mcintyjp/microservice-li
 
 ```bash
 uv sync
-cp .env.example .env  # Edit as needed
 ```
+
+> **Note:** `.env` is already created from `.env.example` during scaffolding.
+> Copying again would overwrite the file. Edit `.env` directly as needed.
 
 ## Run
 
 ```bash
-uv run python -m {module_name}.main
+uv run python -m $module_name.main
 ```
 
 ## Test
@@ -33,7 +35,7 @@ See `src/actions/hello_world/` for an example.
 ## Adding Services
 
 Create a service class in `src/services/` that extends `ServiceProvider` or `RestAPIService`,
-then register it in `src/{module_name}/main.py`:
+then register it in `src/$module_name/main.py`:
 
 ```python
 from usvc_lib import Application

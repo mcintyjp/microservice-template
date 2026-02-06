@@ -1,13 +1,14 @@
-"""CLI entry point for create-worker."""
+"""CLI entry point for create-microservice."""
 
 from __future__ import annotations
 
 import argparse
 import re
 import sys
+from importlib.metadata import version
 from pathlib import Path
 
-from create_worker.scaffold import ScaffoldConfig, create_project
+from create_microservice.scaffold import ScaffoldConfig, create_project
 
 DEFAULT_LIB_SOURCE = "usvc-lib @ git+https://github.com/mcintyjp/microservice-lib.git"
 
@@ -23,7 +24,7 @@ def _normalize_name(name: str) -> str:
 
 def _parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser = argparse.ArgumentParser(
-        prog="create-worker",
+        prog="create-microservice",
         description="Scaffold a new usvc-lib microservice project.",
     )
     parser.add_argument(
@@ -47,6 +48,11 @@ def _parse_args(argv: list[str] | None = None) -> argparse.Namespace:
         action="store_true",
         help="Skip git init",
     )
+    parser.add_argument(
+        "--version",
+        action="version",
+        version=f"%(prog)s {version('create-microservice')}",
+    )
     return parser.parse_args(argv)
 
 
@@ -55,7 +61,15 @@ def main(argv: list[str] | None = None) -> None:
 
     project_name = args.name
     module_name = _normalize_name(project_name)
-    target_dir = Path.cwd() / project_name
+
+    if not re.match(r"^[a-z_][a-z0-9_]*$", module_name):
+        print(
+            f"Error: '{project_name}' cannot be converted to a valid Python module name.",
+            file=sys.stderr,
+        )
+        sys.exit(1)
+
+    target_dir = Path.cwd() / module_name
 
     if target_dir.exists():
         print(f"Error: directory '{target_dir}' already exists.", file=sys.stderr)

@@ -2,7 +2,7 @@
 
 import pytest
 
-from create_worker.templates import (
+from create_microservice.templates import (
     CLAUDE_MANIFEST,
     COPILOT_MANIFEST,
     MANIFEST,
@@ -26,10 +26,10 @@ class TestTemplateRendering:
     def test_no_unresolved_placeholders(self, template_module, path_template):
         """Template placeholders should all be resolved after rendering."""
         rendered = render(template_module, **TEMPLATE_VARS)
-        # Only check for our known template variables remaining unresolved
+        # Check for unresolved $variable placeholders (string.Template syntax)
         for var_name in TEMPLATE_VARS:
-            assert f"{{{var_name}}}" not in rendered, (
-                f"Unresolved placeholder {{{var_name}}} in {path_template}"
+            assert f"${var_name}" not in rendered, (
+                f"Unresolved placeholder ${var_name} in {path_template}"
             )
 
 
