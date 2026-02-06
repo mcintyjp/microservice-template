@@ -26,6 +26,11 @@ class TestNormalizeName:
 
 
 class TestParseArgs:
+    def test_version_flag(self, capsys):
+        with pytest.raises(SystemExit) as exc_info:
+            _parse_args(["--version"])
+        assert exc_info.value.code == 0
+
     def test_name_required(self):
         with pytest.raises(SystemExit):
             _parse_args([])
