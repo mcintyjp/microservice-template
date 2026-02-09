@@ -12,6 +12,16 @@ uv sync
 > **Note:** `.env` is already created from `.env.example` during scaffolding.
 > Copying again would overwrite the file. Edit `.env` directly as needed.
 
+### Upgrading usvc-lib
+
+To pull the latest changes from the `usvc-lib` dependency:
+
+```bash
+uv sync --upgrade-package usvc-lib
+```
+
+This updates the lock file with the latest commit from the library's repository and syncs your environment.
+
 ## Configuration
 
 ### OpenTelemetry (Optional)
