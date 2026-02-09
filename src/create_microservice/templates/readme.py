@@ -12,6 +12,18 @@ uv sync
 > **Note:** `.env` is already created from `.env.example` during scaffolding.
 > Copying again would overwrite the file. Edit `.env` directly as needed.
 
+## Configuration
+
+### OpenTelemetry (Optional)
+
+To enable distributed tracing and observability, configure these environment variables in `.env`:
+
+- `OTEL_EXPORTER_OTLP_ENDPOINT` — URL of your OTLP collector (e.g., `http://localhost:4318`)
+- `OTEL_EXPORTER_OTLP_USER` — Username for authenticated OTLP endpoints
+- `OTEL_EXPORTER_OTLP_PASSWORD` — Password for authenticated OTLP endpoints
+
+These credentials are used when your OpenTelemetry collector requires HTTP basic authentication.
+
 ## Run
 
 ```bash

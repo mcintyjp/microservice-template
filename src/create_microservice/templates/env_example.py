@@ -21,5 +21,9 @@ HTTP_PORT=8000
 
 # Logging
 LOG_CONSOLE_JSON=false
+
+# OpenTelemetry (optional - for distributed tracing)
 # OTEL_EXPORTER_OTLP_ENDPOINT=
+# OTEL_EXPORTER_OTLP_USER=your_user@example.com
+# OTEL_EXPORTER_OTLP_PASSWORD=your_password
 """
