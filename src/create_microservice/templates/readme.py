@@ -26,9 +26,10 @@ This updates the lock file with the latest commit from the library's repository 
 
 ### OpenTelemetry (Optional)
 
-To enable distributed tracing and observability, configure these environment variables in `.env`:
+To enable distributed tracing and logging, configure these environment variables in `.env`:
 
-- `OTEL_EXPORTER_OTLP_ENDPOINT` — URL of your OTLP collector (e.g., `http://localhost:4318`)
+- `OTEL_EXPORTER_OTLP_LOGS_ENDPOINT` — URL for logs (e.g., `http://collector:4318/v1/logs`)
+- `OTEL_EXPORTER_OTLP_TRACES_ENDPOINT` — URL for traces (e.g., `http://collector:4318/v1/traces`)
 - `OTEL_EXPORTER_OTLP_USER` — Username for authenticated OTLP endpoints
 - `OTEL_EXPORTER_OTLP_PASSWORD` — Password for authenticated OTLP endpoints
 
