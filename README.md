@@ -5,9 +5,19 @@ CLI tool that scaffolds production-ready microservice projects built on [usvc-li
 ## Quick Start
 
 ```bash
-uv tool install .
+uv tool install "git+https://github.com/mcintyjp/microservice-template.git"
 create-microservice --name my-service
 cd my_service && uv sync
+```
+
+### Alternative: Clone and Install
+
+If you prefer to clone the repository first:
+
+```bash
+git clone https://github.com/mcintyjp/microservice-template.git
+cd microservice-template
+uv tool install .
 ```
 
 ## Usage
