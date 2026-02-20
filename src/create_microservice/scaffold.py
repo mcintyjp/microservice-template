@@ -14,6 +14,7 @@ from create_microservice.templates import (
     MANIFEST,
     render,
 )
+from create_microservice.templates import agent_md, developer_guide_md
 
 
 @dataclass
@@ -50,6 +51,10 @@ def create_project(config: ScaffoldConfig) -> None:
     for template_module, path_template in provider_manifest:
         rel_path = path_template.format(**template_vars)
         _write_file(config.target_dir, rel_path, render(template_module, **template_vars))
+
+    # Write static library docs
+    _write_file(config.target_dir, "AGENT.md", agent_md.CONTENT)
+    _write_file(config.target_dir, "DEVELOPER_GUIDE.md", developer_guide_md.CONTENT)
 
     # Copy .env.example to .env
     env_example = config.target_dir / ".env.example"
