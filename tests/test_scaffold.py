@@ -29,6 +29,7 @@ class TestCreateProject:
             ".env.example",
             ".env",
             "src/test_service/main.py",
+            "src/test_service/config.py",
             "src/test_service/__init__.py",
             "src/actions/__init__.py",
             "src/actions/hello_world/__init__.py",
@@ -66,7 +67,15 @@ class TestCreateProject:
         create_project(config)
         content = (config.target_dir / "src" / "test_service" / "main.py").read_text()
         assert "from usvc_lib import Application" in content
+        assert "from test_service.config import Settings" in content
+        assert "settings_class=Settings" in content
         assert "app.run()" in content
+
+    def test_config_py_content(self, config):
+        create_project(config)
+        content = (config.target_dir / "src" / "test_service" / "config.py").read_text()
+        assert "from usvc_lib import WorkerSettings" in content
+        assert "class Settings(WorkerSettings):" in content
 
 
 class TestProviderFiles:

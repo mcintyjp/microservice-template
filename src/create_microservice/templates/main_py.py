@@ -3,9 +3,11 @@ CONTENT = """\
 
 from usvc_lib import Application
 
+from ${module_name}.config import Settings
+
 
 def main() -> None:
-    app = Application()
+    app = Application(settings_class=Settings)
     app.run()
 
 
