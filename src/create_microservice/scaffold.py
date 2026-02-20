@@ -5,7 +5,6 @@ from __future__ import annotations
 import shutil
 import subprocess
 import sys
-import urllib.request
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -15,18 +14,6 @@ from create_microservice.templates import (
     MANIFEST,
     render,
 )
-
-_LIB_RAW_BASE = "https://raw.githubusercontent.com/mcintyjp/microservice-lib/main/"
-
-
-def _fetch_lib_file(filename: str) -> str | None:
-    """Fetch a file from the usvc-lib repository. Returns None on any failure."""
-    url = _LIB_RAW_BASE + filename
-    try:
-        with urllib.request.urlopen(url, timeout=5) as response:
-            return response.read().decode("utf-8")
-    except Exception:
-        return None
 
 
 @dataclass
@@ -63,15 +50,6 @@ def create_project(config: ScaffoldConfig) -> None:
     for template_module, path_template in provider_manifest:
         rel_path = path_template.format(**template_vars)
         _write_file(config.target_dir, rel_path, render(template_module, **template_vars))
-
-    # Fetch files from the library repo
-    lib_readme = _fetch_lib_file("README.md")
-    if lib_readme is not None:
-        _write_file(config.target_dir, "DEVELOPER_GUIDE.md", lib_readme)
-
-    agent_md = _fetch_lib_file("AGENT.md")
-    if agent_md is not None:
-        _write_file(config.target_dir, "AGENT.md", agent_md)
 
     # Copy .env.example to .env
     env_example = config.target_dir / ".env.example"
