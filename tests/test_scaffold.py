@@ -71,6 +71,12 @@ class TestCreateProject:
         assert "settings_class=Settings" in content
         assert "app.run()" in content
 
+    def test_config_py_content(self, config):
+        create_project(config)
+        content = (config.target_dir / "src" / "test_service" / "config.py").read_text()
+        assert "from usvc_lib import WorkerSettings" in content
+        assert "class Settings(WorkerSettings):" in content
+
 
 class TestProviderFiles:
     def test_claude_provider_creates_claude_files(self, config):
